@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { useStateValue } from "../../../StateProvider";
+import { auth } from "../../../firebase";
 
 const Footer = () => {
+  const [{ user }, dispatch] = useStateValue();
+  useEffect(() => {
+    onAuthStateChanged(auth, (authUser) => {
+      console.log(authUser.email);
+      if (authUser) {
+        // the user just logged in
+        dispatch({
+          type: "SET_USER",
+          user: authUser.email,
+        });
+      } else {
+        // the user is logged out
+        dispatch({
+          type: "SET_USER",
+          user: null,
+        });
+      }
+    });
+  }, []);
   return (
     <div>
       <footer>
@@ -36,22 +59,22 @@ const Footer = () => {
                         <h3>Menu</h3>
                         <ul>
                           <li>
-                            <a href="#">Home</a>
+                            <Link to="/">Home</Link>
                           </li>
                           <li>
-                            <a href="#">About</a>
+                            <Link to="/about">About</Link>
                           </li>
                           <li>
-                            <a href="#">Services</a>
+                            <Link to="/">Services</Link>
                           </li>
                           <li>
-                            <a href="#">Testimonial</a>
+                            <Link to="/testimonial">Testimonial</Link>
                           </li>
                           <li>
-                            <a href="#">Blog</a>
+                            <Link to="/blog">Blog</Link>
                           </li>
                           <li>
-                            <a href="#">Contact</a>
+                            <Link to="/contact">Contact</Link>
                           </li>
                         </ul>
                       </div>
@@ -61,22 +84,24 @@ const Footer = () => {
                         <h3>Account</h3>
                         <ul>
                           <li>
-                            <a href="#">Account</a>
+                            <Link to="/">Account</Link>
                           </li>
                           <li>
-                            <a href="#">Checkout</a>
+                            <Link to="/checkout">Checkout</Link>
                           </li>
                           <li>
-                            <a href="#">Login</a>
+                            <Link to={!user && "./login"}>
+                              {user ? "Log Out" : "Log In"}
+                            </Link>
                           </li>
                           <li>
-                            <a href="#">Register</a>
+                            <Link to={!user && "./login"}>Register</Link>
                           </li>
                           <li>
-                            <a href="#">Shopping</a>
+                            <Link to="/checkout">Shopping</Link>
                           </li>
                           <li>
-                            <a href="#">Widget</a>
+                            <Link to="/">Widget</Link>
                           </li>
                         </ul>
                       </div>
