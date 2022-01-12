@@ -1,5 +1,6 @@
 export const initialState = {
   basket: [],
+  selectedProduct: null,
   user: null,
 };
 
@@ -9,6 +10,12 @@ export const getBasketTotal = (basket) =>
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "SELECTED_PRODUCT":
+      return {
+        ...state,
+        selectedProduct: action.item,
+      };
+
     case "ADD_TO_BASKET":
       return {
         ...state,

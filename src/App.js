@@ -9,6 +9,7 @@ import Testimonial from "./Component/Testimonial/Testimonial";
 import Checkout from "./Component/Checkout/Checkout";
 import Login from "./Component/Login/Login";
 import Payment from "./Component/Payment/Payment";
+import Productdetails from "./Component/ProductDetails/Productdetails";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
@@ -37,6 +38,7 @@ function App() {
               </Elements>
             }
           />
+          <Route path="/view-product" element={<Productdetails />} />
         </Routes>
       </div>
     </Router>

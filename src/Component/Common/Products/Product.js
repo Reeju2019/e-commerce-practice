@@ -1,5 +1,6 @@
 import React from "react";
 import { useStateValue } from "../../../StateProvider";
+import { Link } from "react-router-dom";
 
 const Product = (props) => {
   const [{ basket }, dispatch] = useStateValue();
@@ -9,6 +10,18 @@ const Product = (props) => {
   const addToBasket = () => {
     dispatch({
       type: "ADD_TO_BASKET",
+      item: {
+        id: props.id,
+        name: props.name,
+        ImageUrl: props.ImageUrl,
+        price: props.price,
+      },
+    });
+  };
+
+  const selectedProduct = () => {
+    dispatch({
+      type: "SELECTED_PRODUCT",
       item: {
         id: props.id,
         name: props.name,
@@ -30,9 +43,14 @@ const Product = (props) => {
             >
               Add to Cart
             </a>
-            <a href="" className="option2">
-              Buy Now
-            </a>
+            <Link
+              to="/view-product"
+              style={{ cursor: "pointer" }}
+              onClick={selectedProduct}
+              className="option2"
+            >
+              View Details
+            </Link>
           </div>
         </div>
         <div className="img-box">
