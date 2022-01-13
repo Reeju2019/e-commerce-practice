@@ -1,6 +1,6 @@
 import React from "react";
-import { useStateValue } from "../../../StateProvider";
 import { Link } from "react-router-dom";
+import { useStateValue } from "../../../StateProvider";
 
 const Product = (props) => {
   const [{ basket }, dispatch] = useStateValue();
@@ -8,6 +8,7 @@ const Product = (props) => {
   // console.log("this is the basket", basket);
 
   const addToBasket = () => {
+    console.log("this is the basket", basket);
     dispatch({
       type: "ADD_TO_BASKET",
       item: {

@@ -41,24 +41,55 @@ function Payment() {
     console.log(clientSecret);
 
     const payload = await stripe
-      .confirmPayment(clientSecret, elements, {
-        type: "card",
-        // payment_method: {
-        //   card: elements.getElement(CardElement),
-        // },
+      .confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+        },
       })
       .then(({ paymentIntent }) => {
+        console.log(paymentIntent);
         setSucceeded(true);
         setError(null);
         setProcessing(false);
-
         dispatch({
           type: "EMPTY_BASKET",
         });
-
-        navigate("./order", { replace: true });
+        navigate("/");
+        // if (response.paymentIntent.status === "succeeded") {
+        //   setSucceeded(true);
+        //   setError(null);
+        //   setProcessing(false);
+        //   dispatch({
+        //     type: "EMPTY_BASKET",
+        //   });
+        //   // navigate("/orders");
+        //   navigate("/");
+        // }
+      })
+      .catch((error) => {
+        setError(error);
+        setProcessing(false);
       });
   };
+
+  // const payload = await stripe
+  //   .confirmPayment(clientSecret, elements, {
+  //     type: "card",
+  //     payment_method: {
+  //       card: elements.getElement(CardElement),
+  //     },
+  //   })
+  //   .then(({ paymentIntent }) => {
+  //     setSucceeded(true);
+  //     setError(null);
+  //     setProcessing(false);
+
+  //     dispatch({
+  //       type: "EMPTY_BASKET",
+  //     });
+
+  //     navigate("./order", { replace: true });
+  //   });
 
   const handleChange = (event) => {
     // do some stuff

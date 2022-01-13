@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useStateValue } from "../../StateProvider";
 import "./CheckoutProduct.css";
 
-function CheckoutProduct({ id, ImageUrl, name, price, rating }) {
+function CheckoutProduct({ id, ImageUrl, name, price, quentity }) {
   const [{ basket }, dispatch] = useStateValue();
+
+  const addQuantity = () => {
+    dispatch({
+      type: "ADD_QUANTITY",
+      item: { id, ImageUrl, name, price, quentity },
+    });
+  };
+
+  const removeQuantity = () => {
+    dispatch({
+      type: "REMOVE_QUANTITY",
+      item: { id, ImageUrl, name, price, quentity },
+    });
+  };
 
   const removeFromBasket = () => {
     //  remove the item from the basket
@@ -12,6 +26,10 @@ function CheckoutProduct({ id, ImageUrl, name, price, rating }) {
       id: id,
     });
   };
+
+  useEffect(() => {
+    console.log("useEffect");
+  }, [basket]);
 
   return (
     <div className="checkoutProduct">
@@ -23,6 +41,15 @@ function CheckoutProduct({ id, ImageUrl, name, price, rating }) {
           <small>$</small>
           <strong>{price}</strong>
         </p>
+        <div className="checkoutProduct__quantity">
+          <div className="checkoutProduct__quantity--minus">
+            <button onClick={removeQuantity}>-</button>
+          </div>
+          <div className="checkoutProduct__quantity--number">{quentity}</div>
+          <div className="checkoutProduct__quantity--plus">
+            <button onClick={addQuantity}>+</button>
+          </div>
+        </div>
         <button onClick={removeFromBasket}>Remove from Cart</button>
       </div>
     </div>

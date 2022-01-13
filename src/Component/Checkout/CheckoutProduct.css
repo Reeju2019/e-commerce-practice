@@ -3,6 +3,9 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+.checkoutProduct__quantity {
+  display: flex;
+}
 
 .checkoutProduct__animation {
   transition-delay: 1s;

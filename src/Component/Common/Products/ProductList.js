@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Product from "./Product";
 import axios from "axios";
+import { useStateValue } from "../../../StateProvider";
 
 const ProductList = () => {
+  const [product, setProduct] = useState();
+  const [error, setError] = useState();
+  const [{ productList, basket }, dispatch] = useStateValue();
+  const fetchProducts = async () => {
+    const response = await axios
+      .get("https://fakestoreapi.com/products")
+      .catch((err) => setError(err));
+    console.log("response.data >>>", response.data);
+    dispatch({
+      type: "SET_PRODUCTS",
+      ProductList: {
+        ...response.data,
+      },
+    });
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
     <section className="product_section layout_padding">
       <div className="container">

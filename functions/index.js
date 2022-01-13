@@ -24,6 +24,8 @@ app.post("/payment/create", async (request, response) => {
   console.log("Payment Request Recieved BOOM!!! for this amount >>>", total);
 
   const paymentIntent = await stripe.paymentIntents.create({
+    payment_method_types: ["card"],
+    AccessControlAllowOrigin: "*",
     amount: total, // subunits of the currency
     currency: "usd",
   });

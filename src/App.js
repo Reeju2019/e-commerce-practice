@@ -12,12 +12,35 @@ import Payment from "./Component/Payment/Payment";
 import Productdetails from "./Component/ProductDetails/Productdetails";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { useStateValue } from "./StateProvider";
+import { auth } from "./firebase";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 const promise = loadStripe(
   "pk_test_51KGlLxSD4dxFFUMshYA8QPhXW3cxKqwsVvpSjOafIWcKk5k3c7izBFe8z90bXtWyJG853FWiDgVaGv1GV8QOiCZ100sHZnb4sU"
 );
 
 function App() {
+  const [{ user }, dispatch] = useStateValue();
+  useEffect(() => {
+    onAuthStateChanged(auth, (authUser) => {
+      console.log(authUser?.email);
+      if (authUser) {
+        // the user just logged in
+        dispatch({
+          type: "SET_USER",
+          user: authUser?.email,
+        });
+      } else {
+        // the user is logged out
+        dispatch({
+          type: "SET_USER",
+          user: null,
+        });
+      }
+    });
+  }, []);
   return (
     <Router>
       <div className="App">

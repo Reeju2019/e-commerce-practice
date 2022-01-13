@@ -6,24 +6,12 @@ import { auth } from "../../../firebase";
 
 const Footer = () => {
   const [{ user }, dispatch] = useStateValue();
-  useEffect(() => {
-    onAuthStateChanged(auth, (authUser) => {
-      console.log(authUser.email);
-      if (authUser) {
-        // the user just logged in
-        dispatch({
-          type: "SET_USER",
-          user: authUser.email,
-        });
-      } else {
-        // the user is logged out
-        dispatch({
-          type: "SET_USER",
-          user: null,
-        });
-      }
-    });
-  }, []);
+  const handleAuthentication = () => {
+    if (user) {
+      auth.signOut();
+    }
+  };
+
   return (
     <div>
       <footer>
@@ -90,7 +78,10 @@ const Footer = () => {
                             <Link to="/checkout">Checkout</Link>
                           </li>
                           <li>
-                            <Link to={!user && "./login"}>
+                            <Link
+                              onClick={handleAuthentication}
+                              to={!user && "./login"}
+                            >
                               {user ? "Log Out" : "Log In"}
                             </Link>
                           </li>

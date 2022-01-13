@@ -2,11 +2,11 @@ import React from "react";
 
 const InnerPage = () => {
   return (
-    <section Nameclass="inner_page_head">
-      <div Nameclass="container_fuild">
-        <div Nameclass="row">
-          <div Nameclass="col-md-12">
-            <div Nameclass="full">
+    <section className="inner_page_head">
+      <div className="container_fuild">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="full">
               <h3>Product Grid</h3>
             </div>
           </div>
